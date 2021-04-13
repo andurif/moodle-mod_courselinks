@@ -1,0 +1,11 @@
+.activity.courselinks.modtype_courselinks .contentwithoutlink {
+    display: inherit;
+}
+
+.activity.courselinks.modtype_courselinks .no-overflow {
+    overflow: inherit;
+}
+
+.activity.courselinks.modtype_courselinks .list-group a.list-group-item:hover {
+    text-decoration: underline;
+}
