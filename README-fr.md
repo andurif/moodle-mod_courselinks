@@ -30,6 +30,9 @@ Afficher sur un cours des liens vers d'autres cours selon trois types d'affichag
 - Vignette: les liens seront affichés sous forme de vignette avec l\'image de cours propre à chaque cours.</li>
 - Liste : les liens seront listés les uns en dessous des autres.</li>
 - Menu de navigation: les liens seront affichés sous forme d\'un menu où chaque cours sera représenté par un item du menu.
+<p>Attention, un lien vers un cours ne sera visible qu'aux utilisateurs ayant des droits d'accès à ce cours !</p>
+
+<img src="https://i15.servimg.com/u/f15/17/05/22/27/course10.png" />
 
 Pistes d'améliorations
 -----
