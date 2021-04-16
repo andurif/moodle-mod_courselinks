@@ -265,7 +265,7 @@ function get_content_card($links) {
  * @throws moodle_exception
  * @throws require_login_exception
  */
-function    get_content_nav($links) {
+function get_content_nav($links) {
     $content =  html_writer::start_tag('ul', array('class' => 'nav nav-pills justify-content-center', 'style' => 'list-style: none;')). PHP_EOL;
     foreach ($links as $link) {
         try {
@@ -329,9 +329,32 @@ function get_course_image($course) {
         return get_config('theme_bandeau', 'default_course_img');
     }
     $image = (class_exists(course_summary_exporter::class) && method_exists(course_summary_exporter::class, 'get_course_image')) ? course_summary_exporter::get_course_image($course) : null;
-    $image = (!$image) ? $PAGE->get_renderer('core')->get_generated_image_for_id($course->id) : $image;
+//    $image = (!$image) ? $PAGE->get_renderer('core')->get_generated_image_for_id($course->id) : $image; //@todo: some errors after duplicate action
+    $image = (!$image) ? get_generated_image_for_id($course->id) : $image;
 
     return $image;
+}
+
+/**
+ * Get the course pattern datauri to show on a course card.
+ *
+ * The datauri is an encoded svg that can be passed as a url.
+ * @param int $id Id to use when generating the pattern
+ * @return string datauri
+ */
+function get_generated_image_for_id($id) {
+    $colornumbers = range(1, 20);
+    $basecolors = [];
+    foreach ($colornumbers as $number) {
+        $basecolors[] = get_config('core_admin', 'coursecolor' . $number);
+    }
+
+    $color = $basecolors[$id % 10];
+    $pattern = new \core_geopattern();
+    $pattern->setColor($color);
+    $pattern->patternbyid($id);
+
+    return $pattern->datauri();
 }
 
 /**
