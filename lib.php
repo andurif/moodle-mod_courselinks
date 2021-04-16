@@ -343,10 +343,15 @@ function get_course_image($course) {
  * @return string datauri
  */
 function get_generated_image_for_id($id) {
-    $colornumbers = range(1, 20);
-    $basecolors = [];
-    foreach ($colornumbers as $number) {
-        $basecolors[] = get_config('core_admin', 'coursecolor' . $number);
+    if (get_config('core_admin', 'coursecolor1')) {
+        $colornumbers = range(1, 10);
+        $basecolors = [];
+        foreach ($colornumbers as $number) {
+            $basecolors[] = get_config('core_admin', 'coursecolor' . $number);
+        }
+    } else {
+        $basecolors = ['#81ecec', '#74b9ff', '#a29bfe', '#dfe6e9', '#00b894',
+            '#0984e3', '#b2bec3', '#fdcb6e', '#fd79a8', '#6c5ce7'];
     }
 
     $color = $basecolors[$id % 10];
