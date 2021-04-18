@@ -107,7 +107,7 @@ function courselinks_delete_instance($id) {
     $cm = get_coursemodule_from_instance('courselinks', $id);
     \core_completion\api::update_completion_date_event($cm->id, 'courselinks', $id, null);
 
-    // note: all context files are deleted automatically
+    // Note: all context files are deleted automatically.
     $DB->delete_records('courselinks', array('id' => $team->id));
 
     return true;
@@ -137,7 +137,7 @@ function courselinks_get_coursemodule_info($coursemodule) {
         $info->content = format_module_intro('courselinks', $resource, $coursemodule->id, false);
     }
 
-   $info->content .= get_content($resource);
+    $info->content .= get_content($resource);
 
     return $info;
 }
@@ -151,15 +151,15 @@ function get_linkable_courses() {
 
     $courses = [];
     $mycourses = enrol_get_my_courses(null, 'fullname ASC,visible DESC,sortorder ASC');
-    foreach($mycourses as $key => $mycourse) {
-        $toUnset = false;
+    foreach ($mycourses as $key => $mycourse) {
+        $to_unset = false;
         if (!$mycourse->visible) {
             if (!has_capability('moodle/role:assign', context_course::instance($mycourse->id))) {
-                $toUnset = true;
+                $to_unset = true;
             }
         }
 
-        if ($toUnset) {
+        if ($to_unset) {
             unset($mycourses[$key]);
         }
     }
@@ -228,22 +228,22 @@ function get_content($courselinks) {
  * @throws require_login_exception
  */
 function get_content_card($links) {
-    $content =  html_writer::start_tag('div', array('class' => 'row row-cols-1 row-cols-md-4 justify-content-center')). PHP_EOL;;
+    $content = html_writer::start_tag('div', array('class' => 'row row-cols-1 row-cols-md-4 justify-content-center')) . PHP_EOL;;
     foreach ($links as $link) {
         try {
             $course = get_course($link);
         }
         catch (Exception $exc) {
-            //Next course.
+            // Next course.
             continue;
         }
         if (has_access($course)) {
             $url = new moodle_url('/course/view.php', array('id' => $course->id));
-            $contentlinks = html_writer::start_tag('div', array('class' => 'col mb-3 text-center', 'style' => 'margin-bottom: 20px;')). PHP_EOL;
-            $contentlinks .= html_writer::start_tag('div', array('class' => 'card shadow-lg h-100')). PHP_EOL;
+            $contentlinks = html_writer::start_tag('div', array('class' => 'col mb-3 text-center', 'style' => 'margin-bottom: 20px;')) . PHP_EOL;
+            $contentlinks .= html_writer::start_tag('div', array('class' => 'card shadow-lg h-100')) . PHP_EOL;
             $contentlinks .= html_writer::link($url , html_writer::img(get_course_image($course), $course->fullname, array('class' => 'card-img-top img-fluid', 'style' => 'max-height: 200px;', 'target' => '_blank')). PHP_EOL);
-            $contentlinks .= html_writer::start_tag('div', array('class' => 'card-body')). PHP_EOL;
-            $contentlinks .= html_writer::start_tag('h5', array('class' => 'card-title')). PHP_EOL;
+            $contentlinks .= html_writer::start_tag('div', array('class' => 'card-body')) . PHP_EOL;
+            $contentlinks .= html_writer::start_tag('h5', array('class' => 'card-title')) . PHP_EOL;
             $contentlinks .= html_writer::link($url , $course->fullname, array('target' => '_blank'));
             $contentlinks .= html_writer::end_tag('h5') . PHP_EOL;
             $contentlinks .= html_writer::end_tag('div') . PHP_EOL;
@@ -297,13 +297,13 @@ function get_content_nav($links) {
  * @throws require_login_exception
  */
 function get_content_list($links) {
-    $content =  html_writer::start_tag('div', array('class' => 'nav list-group justify-content-center')). PHP_EOL;
+    $content = html_writer::start_tag('div', array('class' => 'nav list-group justify-content-center')) . PHP_EOL;
     foreach ($links as $link) {
         try {
             $course = get_course($link);
         }
         catch (Exception $exc) {
-            //Next course.
+            // Next course.
             continue;
         }
         if (has_access($course)) {
@@ -329,7 +329,7 @@ function get_course_image($course) {
         return get_config('theme_bandeau', 'default_course_img');
     }
     $image = (class_exists(course_summary_exporter::class) && method_exists(course_summary_exporter::class, 'get_course_image')) ? course_summary_exporter::get_course_image($course) : null;
-//    $image = (!$image) ? $PAGE->get_renderer('core')->get_generated_image_for_id($course->id) : $image; //@todo: some errors after duplicate action
+    // $image = (!$image) ? $PAGE->get_renderer('core')->get_generated_image_for_id($course->id) : $image; //@todo: some errors after duplicate action
     $image = (!$image) ? get_generated_image_for_id($course->id) : $image;
 
     return $image;
@@ -477,15 +477,15 @@ function has_access($course) {
                 }
             } else {
                 $access = false;
-//                // User is not enrolled and is not allowed to browse courses here.
-//                if ($preventredirect) {
-//                    throw new require_login_exception('Course is not available');
-//                }
-//                $PAGE->set_context(null);
-//                // We need to override the navigation URL as the course won't have been added to the navigation and thus
-//                // the navigation will mess up when trying to find it.
-//                navigation_node::override_active_url(new moodle_url('/'));
-//                notice(get_string('coursehidden'), $CFG->wwwroot .'/');
+                // User is not enrolled and is not allowed to browse courses here.
+                // if ($preventredirect) {
+                //  throw new require_login_exception('Course is not available');
+                // }
+                // PAGE->set_context(null);
+                // We need to override the navigation URL as the course won't have been added to the navigation and thus
+                // the navigation will mess up when trying to find it.
+                // navigation_node::override_active_url(new moodle_url('/'));
+                // notice(get_string('coursehidden'), $CFG->wwwroot .'/');
             }
         }
     }

@@ -24,8 +24,8 @@
 
 require_once("../../config.php");
 
-$id = optional_param('id',0,PARAM_INT);    // Course Module ID, or
-$c = optional_param('courselinks',0,PARAM_INT);     // Courselinks ID
+$id = optional_param('id', 0, PARAM_INT);    // Course Module ID, or
+$c = optional_param('courselinks', 0, PARAM_INT);     // Courselinks ID.
 
 if ($id) {
     $PAGE->set_url('/mod/courselinks/index.php', array('id' => $id));
@@ -36,11 +36,10 @@ if ($id) {
         print_error('coursemisconf');
     }
 
-    if (!$courselinks = $DB->get_record("courselinks", array("id"=>$cm->instance))) {
+    if (!$courselinks = $DB->get_record("courselinks", array("id" => $cm->instance))) {
         print_error('invalidcoursemodule');
     }
-}
-else {
+} else {
     $PAGE->set_url('/mod/courselinks/index.php', array( 'courselinks' => $c));
     if (!$courselinks = $DB->get_record("courselinks", array("id" => $c))) {
         print_error('invalidcoursemodule');

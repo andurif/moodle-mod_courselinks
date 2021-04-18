@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once ($CFG->dirroot.'/course/moodleform_mod.php');
+require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once($CFG->dirroot.'/mod/courselinks/lib.php');
 require_once($CFG->dirroot.'/vendor/autoload.php');
 
@@ -47,7 +47,7 @@ class mod_courselinks_mod_form extends moodleform_mod {
         if (!empty($this->current->id)) {
             if (!empty($this->current->links)) {
                 $links = json_decode($this->current->links);
-                foreach ($links as  $key => $link) {
+                foreach ($links as $key => $link) {
                     // Check if the course is in the linkable courses list of the user.
                     if (!in_array($link, array_keys($courses))) {
                         unset($links[$key]);
@@ -75,7 +75,6 @@ class mod_courselinks_mod_form extends moodleform_mod {
 
             $displaychoices = array(
                 'card'          => get_string('display:card', 'mod_courselinks'),
-//                'simplecard'    => get_string('display:simplecard', 'mod_courselinks'),
                 'list'          => get_string('display:list', 'mod_courselinks'),
                 'nav'           => get_string('display:nav', 'mod_courselinks'),
             );
@@ -97,11 +96,10 @@ class mod_courselinks_mod_form extends moodleform_mod {
      * @param array $files
      * @return array
      */
-    function validation($data, $files)
-    {
+    function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
-        if ( (isset($data['links']) && count($data['links']) < 1) || (count($data['links']) == 1 && empty($data['links'][0])) ) {
+        if ((isset($data['links']) && count($data['links']) < 1) || (count($data['links']) == 1 && empty($data['links'][0])) ) {
             $errors['links'] = get_string('error_links', 'mod_courselinks');
         }
 
