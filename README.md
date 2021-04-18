@@ -41,4 +41,4 @@ Possible improvements
 
 About us
 ------
-<a href="https://www.uca.fr">Université Clermont Auvergne</a> - 2021.<br/>
+<a href="https://www.uca.fr" target="_blank">Université Clermont Auvergne</a> - 2021.<br/>

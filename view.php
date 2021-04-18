@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -16,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Courselinks module view page.
+ * Courselinks module
  *
  * @package mod_courselinks
  * @copyright  2021 Anthony Durif, Université Clermont Auvergne.
@@ -25,11 +24,11 @@
 
 require_once("../../config.php");
 
-$id = optional_param('id', 0, PARAM_INT);    // Course Module ID, or
-$l = optional_param('l', 0, PARAM_INT);     // Label ID
+$id = optional_param('id',0,PARAM_INT);    // Course Module ID, or
+$c = optional_param('courselinks',0,PARAM_INT);     // Courselinks ID
 
 if ($id) {
-    $PAGE->set_url('/mod/label/index.php', array('id' => $id));
+    $PAGE->set_url('/mod/courselinks/index.php', array('id' => $id));
     if (!$cm = get_coursemodule_from_id('courselinks', $id)) {
         print_error('invalidcoursemodule');
     }
@@ -37,22 +36,22 @@ if ($id) {
         print_error('coursemisconf');
     }
 
-//    if (!$label = $DB->get_record("label", array("id"=>$cm->instance))) {
-//        print_error('invalidcoursemodule');
-//    }
+    if (!$courselinks = $DB->get_record("courselinks", array("id"=>$cm->instance))) {
+        print_error('invalidcoursemodule');
+    }
 }
-//else {
-//    $PAGE->set_url('/mod/label/index.php', array( 'l' => $l));
-//    if (!$label = $DB->get_record("label", array("id" => $l))) {
-//        print_error('invalidcoursemodule');
-//    }
-//    if (!$course = $DB->get_record("course", array( "id" => $label->course)) ){
-//        print_error('coursemisconf');
-//    }
-//    if (!$cm = get_coursemodule_from_instance("label", $label->id, $course->id)) {
-//        print_error('invalidcoursemodule');
-//    }
-//}
+else {
+    $PAGE->set_url('/mod/courselinks/index.php', array( 'courselinks' => $c));
+    if (!$courselinks = $DB->get_record("courselinks", array("id" => $c))) {
+        print_error('invalidcoursemodule');
+    }
+    if (!$course = $DB->get_record("course", array( "id" => $courselinks->course)) ){
+        print_error('coursemisconf');
+    }
+    if (!$cm = get_coursemodule_from_instance("courselinks", $courselinks->id, $course->id)) {
+        print_error('invalidcoursemodule');
+    }
+}
 
 require_login($course, true, $cm);
 
