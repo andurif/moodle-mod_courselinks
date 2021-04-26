@@ -152,14 +152,14 @@ function courselinks_get_linkable_courses() {
     $courses = [];
     $mycourses = enrol_get_my_courses(null, 'fullname ASC,visible DESC,sortorder ASC');
     foreach ($mycourses as $key => $mycourse) {
-        $to_unset = false;
+        $tounset = false;
         if (!$mycourse->visible) {
             if (!has_capability('moodle/role:assign', context_course::instance($mycourse->id))) {
-                $to_unset = true;
+                $tounset = true;
             }
         }
 
-        if ($to_unset) {
+        if ($tounset) {
             unset($mycourses[$key]);
         }
     }
@@ -266,7 +266,7 @@ function courselinks_get_content_card($links) {
  * @throws require_login_exception
  */
 function courselinks_get_content_nav($links) {
-    $content =  html_writer::start_tag('ul', array('class' => 'nav nav-pills justify-content-center', 'style' => 'list-style: none;')). PHP_EOL;
+    $content = html_writer::start_tag('ul', array('class' => 'nav nav-pills justify-content-center', 'style' => 'list-style: none;')). PHP_EOL;
     foreach ($links as $link) {
         try {
             $course = get_course($link);
@@ -308,7 +308,7 @@ function courselinks_get_content_list($links) {
         }
         if (courselinks_has_access($course)) {
             $url = new moodle_url('/course/view.php', array('id' => $course->id));
-            $contentlinks = html_writer::link($url , $course->fullname, array('class' => 'list-group-item list-group-item-action', 'target' => '_blank')). PHP_EOL;
+            $contentlinks = html_writer::link($url, $course->fullname, array('class' => 'list-group-item list-group-item-action', 'target' => '_blank')). PHP_EOL;
             $content = (!empty($contentlinks)) ? $content . $contentlinks : $content;
         }
     }
@@ -479,7 +479,7 @@ function courselinks_has_access($course) {
                 $access = false;
                 // User is not enrolled and is not allowed to browse courses here.
                 // if ($preventredirect) {
-                //  throw new require_login_exception('Course is not available');
+                // throw new require_login_exception('Course is not available');
                 // }
                 // PAGE->set_context(null);
                 // We need to override the navigation URL as the course won't have been added to the navigation and thus

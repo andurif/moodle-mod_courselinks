@@ -61,10 +61,6 @@ class restore_courselinks_activity_structure_step extends restore_activity_struc
 
         $data->timefetched = 0;
 
-        if (!$this->task->is_samesite() or !$DB->record_exists('course', array('id' => $data->refcourse))) {
-            $data->refcourse = 0;
-        }
-
         $newitemid = $DB->insert_record('courselinks', $data);
         // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
