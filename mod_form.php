@@ -42,7 +42,7 @@ class mod_courselinks_mod_form extends moodleform_mod {
         $mform = $this->_form;
         $error = null;
 
-        $courses = get_linkable_courses();
+        $courses = courselinks_get_linkable_courses();
 
         if (!empty($this->current->id)) {
             if (!empty($this->current->links)) {

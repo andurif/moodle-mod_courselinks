@@ -44,7 +44,7 @@ if ($id) {
     if (!$courselinks = $DB->get_record("courselinks", array("id" => $c))) {
         print_error('invalidcoursemodule');
     }
-    if (!$course = $DB->get_record("course", array( "id" => $courselinks->course)) ){
+    if (!$course = $DB->get_record("course", array( "id" => $courselinks->course)) ) {
         print_error('coursemisconf');
     }
     if (!$cm = get_coursemodule_from_instance("courselinks", $courselinks->id, $course->id)) {

@@ -137,7 +137,7 @@ function courselinks_get_coursemodule_info($coursemodule) {
         $info->content = format_module_intro('courselinks', $resource, $coursemodule->id, false);
     }
 
-    $info->content .= get_content($resource);
+    $info->content .= courselinks_get_content($resource);
 
     return $info;
 }
@@ -146,7 +146,7 @@ function courselinks_get_coursemodule_info($coursemodule) {
  * Function to return courses on which we have permissions to do a link.
  * @throws coding_exception
  */
-function get_linkable_courses() {
+function courselinks_get_linkable_courses() {
     global $USER;
 
     $courses = [];
@@ -182,7 +182,7 @@ function courselinks_cm_info_view(cm_info $cm) {
     $courselinks = $DB->get_record('courselinks', array('id' => $cm->instance));
     if ($courselinks) {
         $links = json_decode($courselinks->links);
-        $content = ($links) ? get_content($courselinks) : "";
+        $content = ($links) ? courselinks_get_content($courselinks) : "";
     }
 
     // Also show mod description.
@@ -201,18 +201,18 @@ function courselinks_cm_info_view(cm_info $cm) {
  * @throws moodle_exception
  * @throws require_login_exception
  */
-function get_content($courselinks) {
+function courselinks_get_content($courselinks) {
     $links = json_decode($courselinks->links);
     switch($courselinks->displaytype) {
         case 'card':
         default:
-            $content = get_content_card($links);
+            $content = courselinks_get_content_card($links);
             break;
         case 'list':
-            $content = get_content_list($links);
+            $content = courselinks_get_content_list($links);
             break;
         case 'nav':
-            $content = get_content_nav($links);
+            $content = courselinks_get_content_nav($links);
             break;
     }
 
@@ -227,7 +227,7 @@ function get_content($courselinks) {
  * @throws moodle_exception
  * @throws require_login_exception
  */
-function get_content_card($links) {
+function courselinks_get_content_card($links) {
     $content = html_writer::start_tag('div', array('class' => 'row row-cols-1 row-cols-md-4 justify-content-center')) . PHP_EOL;;
     foreach ($links as $link) {
         try {
@@ -237,11 +237,11 @@ function get_content_card($links) {
             // Next course.
             continue;
         }
-        if (has_access($course)) {
+        if (courselinks_has_access($course)) {
             $url = new moodle_url('/course/view.php', array('id' => $course->id));
             $contentlinks = html_writer::start_tag('div', array('class' => 'col mb-3 text-center', 'style' => 'margin-bottom: 20px;')) . PHP_EOL;
             $contentlinks .= html_writer::start_tag('div', array('class' => 'card shadow-lg h-100')) . PHP_EOL;
-            $contentlinks .= html_writer::link($url , html_writer::img(get_course_image($course), $course->fullname, array('class' => 'card-img-top img-fluid', 'style' => 'max-height: 200px;', 'target' => '_blank')). PHP_EOL);
+            $contentlinks .= html_writer::link($url , html_writer::img(courselinks_get_course_image($course), $course->fullname, array('class' => 'card-img-top img-fluid', 'style' => 'max-height: 200px;', 'target' => '_blank')). PHP_EOL);
             $contentlinks .= html_writer::start_tag('div', array('class' => 'card-body')) . PHP_EOL;
             $contentlinks .= html_writer::start_tag('h5', array('class' => 'card-title')) . PHP_EOL;
             $contentlinks .= html_writer::link($url , $course->fullname, array('target' => '_blank'));
@@ -265,7 +265,7 @@ function get_content_card($links) {
  * @throws moodle_exception
  * @throws require_login_exception
  */
-function get_content_nav($links) {
+function courselinks_get_content_nav($links) {
     $content =  html_writer::start_tag('ul', array('class' => 'nav nav-pills justify-content-center', 'style' => 'list-style: none;')). PHP_EOL;
     foreach ($links as $link) {
         try {
@@ -275,7 +275,7 @@ function get_content_nav($links) {
             //Next course.
             continue;
         }
-        if (has_access($course)) {
+        if (courselinks_has_access($course)) {
             $url = new moodle_url('/course/view.php', array('id' => $course->id));
             $contentlinks = html_writer::start_tag('li', array('class' => 'nav-item')). PHP_EOL;
             $contentlinks .= html_writer::link($url , $course->fullname, array('class' => 'nav-link active', 'style' => 'border: 1px solid white', 'target' => '_blank')). PHP_EOL;
@@ -296,7 +296,7 @@ function get_content_nav($links) {
  * @throws moodle_exception
  * @throws require_login_exception
  */
-function get_content_list($links) {
+function courselinks_get_content_list($links) {
     $content = html_writer::start_tag('div', array('class' => 'nav list-group justify-content-center')) . PHP_EOL;
     foreach ($links as $link) {
         try {
@@ -306,7 +306,7 @@ function get_content_list($links) {
             // Next course.
             continue;
         }
-        if (has_access($course)) {
+        if (courselinks_has_access($course)) {
             $url = new moodle_url('/course/view.php', array('id' => $course->id));
             $contentlinks = html_writer::link($url , $course->fullname, array('class' => 'list-group-item list-group-item-action', 'target' => '_blank')). PHP_EOL;
             $content = (!empty($contentlinks)) ? $content . $contentlinks : $content;
@@ -323,14 +323,14 @@ function get_content_list($links) {
  * @return false|mixed|object|string|null the image.
  * @throws dml_exception
  */
-function get_course_image($course) {
+function courselinks_get_course_image($course) {
     global $PAGE;
     if ($course->id == 1) {
         return get_config('theme_bandeau', 'default_course_img');
     }
     $image = (class_exists(course_summary_exporter::class) && method_exists(course_summary_exporter::class, 'get_course_image')) ? course_summary_exporter::get_course_image($course) : null;
     // $image = (!$image) ? $PAGE->get_renderer('core')->get_generated_image_for_id($course->id) : $image; //@todo: some errors after duplicate action
-    $image = (!$image) ? get_generated_image_for_id($course->id) : $image;
+    $image = (!$image) ? courselinks_get_generated_image_for_id($course->id) : $image;
 
     return $image;
 }
@@ -342,7 +342,7 @@ function get_course_image($course) {
  * @param int $id Id to use when generating the pattern
  * @return string datauri
  */
-function get_generated_image_for_id($id) {
+function courselinks_get_generated_image_for_id($id) {
     if (get_config('core_admin', 'coursecolor1')) {
         $colornumbers = range(1, 10);
         $basecolors = [];
@@ -367,7 +367,7 @@ function get_generated_image_for_id($id) {
  * @param $course the course.
  * @return true if the user has access and false in other cases.
  */
-function has_access($course) {
+function courselinks_has_access($course) {
     global $USER, $DB;
 
     if (is_primary_admin($USER)) {
