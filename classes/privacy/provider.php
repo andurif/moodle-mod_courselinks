@@ -15,13 +15,13 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for mod_teams
+ * Privacy Subsystem implementation for mod_courselinks
  *
  * @package    mod_courselinks
  * @copyright  2021 Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace mod_teams\privacy;
+namespace mod_courselinks\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 

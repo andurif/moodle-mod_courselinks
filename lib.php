@@ -100,7 +100,7 @@ function courselinks_update_instance($data, $mform) {
 function courselinks_delete_instance($id) {
     global $DB;
 
-    if (!$team = $DB->get_record('courselinks', array('id' => $id))) {
+    if (!$courselink = $DB->get_record('courselinks', array('id' => $id))) {
         return false;
     }
 
@@ -108,7 +108,7 @@ function courselinks_delete_instance($id) {
     \core_completion\api::update_completion_date_event($cm->id, 'courselinks', $id, null);
 
     // Note: all context files are deleted automatically.
-    $DB->delete_records('courselinks', array('id' => $team->id));
+    $DB->delete_records('courselinks', array('id' => $courselink->id));
 
     return true;
 }
