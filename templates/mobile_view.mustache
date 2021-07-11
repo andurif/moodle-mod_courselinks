@@ -1,0 +1,55 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_courselinks/mobile_view
+
+    Render the main view for the mobile app.
+
+    Classes required for JS:
+    * none
+
+    Data attributes required for JS:
+    * none
+
+    Context variables required for this template:
+    * cmid - [int] Course module identifier.
+}}
+
+{{=<% %>=}}
+<div>
+    <core-course-module-description
+            description="<% courselinks.intro %>"
+            component="mod_courselinks"
+            componentId="<% cmid %>">
+    </core-course-module-description>
+
+    <%# showdescription %>
+        <ion-item><%{ courselinks.intro }%></ion-item>
+    <%/ showdescription %>
+
+    <%# courses %>
+        <ion-item>
+            <a block ion-button core-link capture="true" href="<% href %>" style="text-decoration: inherit;"
+               class="item-button button button-md button-default button-default-md button-block button-block-md">
+                <span class="button-inner">
+                    <% title %>
+                    <ion-icon aria-label="open" class="icon icon-md ion-md-open" name="open" role="img" start="" style="margin-left: .3em;"></ion-icon>
+                </span>
+            </a>
+        </ion-item>
+    <%/ courses %>
+</div>

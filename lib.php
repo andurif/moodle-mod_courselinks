@@ -167,6 +167,37 @@ function courselinks_get_linkable_courses() {
 }
 
 /**
+ * Fonction to get the list of courses we want to display as an array.
+ * This array is specificly use to render this resource in the mobile moodle app.
+ * @param $courselinks the resource.
+ * @return array an array with link to course and name as items.
+ */
+function courselinks_get_courses_as_array($courselinks)
+{
+    $links = json_decode($courselinks->links);
+    $courses = [];
+
+    foreach ($links as $link) {
+        try {
+            $course = get_course($link);
+        } catch (Exception $exc) {
+            // Next course.
+            continue;
+        }
+
+        if (courselinks_has_access($course)) {
+            $url = new moodle_url('/course/view.php', array('id' => $course->id));
+            $courses[] = [
+                'href'  => $url->out(),
+                'title' => $course->fullname,
+            ];
+        }
+    }
+
+    return $courses;
+}
+
+/**
  * Function to set the module content in a label
  * @param cm_info $cm course module id
  * @throws dml_exception
