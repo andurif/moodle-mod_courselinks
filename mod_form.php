@@ -26,7 +26,6 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once($CFG->dirroot.'/mod/courselinks/lib.php');
-require_once($CFG->dirroot.'/vendor/autoload.php');
 
 /**
  * Class mod_courselinks_mod_form
@@ -74,9 +73,9 @@ class mod_courselinks_mod_form extends moodleform_mod {
             $mform->addHelpButton('links', 'links', 'mod_courselinks');
 
             $displaychoices = array(
-                'card'          => get_string('display:card', 'mod_courselinks'),
-                'list'          => get_string('display:list', 'mod_courselinks'),
-                'nav'           => get_string('display:nav', 'mod_courselinks'),
+                'card'  => get_string('display:card', 'mod_courselinks'),
+                'list'  => get_string('display:list', 'mod_courselinks'),
+                'nav'   => get_string('display:nav', 'mod_courselinks'),
             );
             $mform->addElement('select', 'displaytype', get_string('display', 'mod_courselinks'), $displaychoices);
             $mform->addHelpButton('displaytype', 'display', 'mod_courselinks');

@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die;
  * @return bool|int|null
  */
 function courselinks_supports($feature) {
-    switch($feature) {
+    switch ($feature) {
         case FEATURE_MOD_ARCHETYPE:           return MOD_ARCHETYPE_RESOURCE;
         case FEATURE_GROUPS:                  return false;
         case FEATURE_GROUPINGS:               return false;
@@ -105,7 +105,6 @@ function courselinks_delete_instance($id) {
     }
 
     $cm = get_coursemodule_from_instance('courselinks', $id);
-    \core_completion\api::update_completion_date_event($cm->id, 'courselinks', $id, null);
 
     // Note: all context files are deleted automatically.
     $DB->delete_records('courselinks', array('id' => $courselink->id));
@@ -147,16 +146,12 @@ function courselinks_get_coursemodule_info($coursemodule) {
  * @throws coding_exception
  */
 function courselinks_get_linkable_courses() {
-    global $USER;
-
     $courses = [];
     $mycourses = enrol_get_my_courses(null, 'fullname ASC,visible DESC,sortorder ASC');
     foreach ($mycourses as $key => $mycourse) {
         $tounset = false;
-        if (!$mycourse->visible) {
-            if (!has_capability('moodle/role:assign', context_course::instance($mycourse->id))) {
-                $tounset = true;
-            }
+        if (!has_capability('moodle/role:assign', context_course::instance($mycourse->id))) {
+            $tounset = true;
         }
 
         if ($tounset) {
@@ -203,7 +198,7 @@ function courselinks_cm_info_view(cm_info $cm) {
  */
 function courselinks_get_content($courselinks) {
     $links = json_decode($courselinks->links);
-    switch($courselinks->displaytype) {
+    switch ($courselinks->displaytype) {
         case 'card':
         default:
             $content = courselinks_get_content_card($links);
@@ -232,8 +227,7 @@ function courselinks_get_content_card($links) {
     foreach ($links as $link) {
         try {
             $course = get_course($link);
-        }
-        catch (Exception $exc) {
+        } catch (Exception $exc) {
             // Next course.
             continue;
         }
@@ -241,7 +235,8 @@ function courselinks_get_content_card($links) {
             $url = new moodle_url('/course/view.php', array('id' => $course->id));
             $contentlinks = html_writer::start_tag('div', array('class' => 'col mb-3 text-center', 'style' => 'margin-bottom: 20px;')) . PHP_EOL;
             $contentlinks .= html_writer::start_tag('div', array('class' => 'card shadow-lg h-100')) . PHP_EOL;
-            $contentlinks .= html_writer::link($url , html_writer::img(courselinks_get_course_image($course), $course->fullname, array('class' => 'card-img-top img-fluid', 'style' => 'max-height: 200px;', 'target' => '_blank')). PHP_EOL);
+            $contentlinks .= html_writer::link($url , html_writer::img(courselinks_get_course_image($course),
+                    $course->fullname, array('class' => 'card-img-top img-fluid', 'style' => 'max-height: 200px;', 'target' => '_blank')). PHP_EOL);
             $contentlinks .= html_writer::start_tag('div', array('class' => 'card-body')) . PHP_EOL;
             $contentlinks .= html_writer::start_tag('h5', array('class' => 'card-title')) . PHP_EOL;
             $contentlinks .= html_writer::link($url , $course->fullname, array('target' => '_blank'));
@@ -270,15 +265,15 @@ function courselinks_get_content_nav($links) {
     foreach ($links as $link) {
         try {
             $course = get_course($link);
-        }
-        catch (Exception $exc) {
-            //Next course.
+        } catch (Exception $exc) {
+            // Next course.
             continue;
         }
         if (courselinks_has_access($course)) {
             $url = new moodle_url('/course/view.php', array('id' => $course->id));
             $contentlinks = html_writer::start_tag('li', array('class' => 'nav-item')). PHP_EOL;
-            $contentlinks .= html_writer::link($url , $course->fullname, array('class' => 'nav-link active', 'style' => 'border: 1px solid white', 'target' => '_blank')). PHP_EOL;
+            $contentlinks .= html_writer::link($url , $course->fullname,
+                    array('class' => 'nav-link active', 'style' => 'border: 1px solid white', 'target' => '_blank')). PHP_EOL;
             $contentlinks .= html_writer::end_tag('li') . PHP_EOL;
             $content = (!empty($contentlinks)) ? $content . $contentlinks : $content;
         }
@@ -301,8 +296,7 @@ function courselinks_get_content_list($links) {
     foreach ($links as $link) {
         try {
             $course = get_course($link);
-        }
-        catch (Exception $exc) {
+        } catch (Exception $exc) {
             // Next course.
             continue;
         }
@@ -328,7 +322,8 @@ function courselinks_get_course_image($course) {
     if ($course->id == 1) {
         return get_config('theme_bandeau', 'default_course_img');
     }
-    $image = (class_exists(course_summary_exporter::class) && method_exists(course_summary_exporter::class, 'get_course_image')) ? course_summary_exporter::get_course_image($course) : null;
+    $image = (class_exists(course_summary_exporter::class) && method_exists(course_summary_exporter::class, 'get_course_image'))
+        ? course_summary_exporter::get_course_image($course) : null;
     // $image = (!$image) ? $PAGE->get_renderer('core')->get_generated_image_for_id($course->id) : $image; //@todo: some errors after duplicate action
     $image = (!$image) ? courselinks_get_generated_image_for_id($course->id) : $image;
 
