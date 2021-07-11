@@ -20,7 +20,7 @@ Installation
 > git clone https://github.com/andurif/moodle-mod_courselinks.git mod/courselinks
 
 - Téléchargement:
-> Télécharger le zip depuis https://github.com/andurif/moodle-mod_courselinks/archive/refs/heads/master.zip, dézipper l'archive dans le dossier mod/ et renommez le "courselinks" si besoin ou installez-le depuis la page d'installation des plugins si vous possédeez les bons droits.
+> Télécharger le zip depuis https://github.com/andurif/moodle-mod_courselinks/archive/refs/heads/main.zip, dézipper l'archive dans le dossier mod/ et renommez le "courselinks" si besoin ou installez-le depuis la page d'installation des plugins si vous possédeez les bons droits.
 
 2. Aller sur la page de notifications pour finaliser l'installation du plugin.
 
