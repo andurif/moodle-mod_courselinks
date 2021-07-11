@@ -9,7 +9,7 @@ Le but principal de ce module est de faire affiché sur un cours des liens vers 
 Pré-requis
 ------------
 - Moodle en version 3.7 ou plus récente.<br/>
-  -> Tests effectués sur des versions 3.7 à 3.10.3 (tests sur des versions précédentes par encore effectués).<br/>
+  -> Tests effectués sur des versions 3.7 à 3.11.0 (tests sur des versions précédentes par encore effectués).<br/>
 - Utilisation du thème Boost ou d'un thème qui étend le thème Boost (qui utilise bootstrap).
 
 Installation
@@ -30,7 +30,9 @@ Afficher sur un cours des liens vers d'autres cours selon trois types d'affichag
 - Vignette: les liens seront affichés sous forme de vignette avec l\'image de cours propre à chaque cours.</li>
 - Liste : les liens seront listés les uns en dessous des autres.</li>
 - Menu de navigation: les liens seront affichés sous forme d\'un menu où chaque cours sera représenté par un item du menu.
-<p>Attention, un lien vers un cours ne sera visible qu'aux utilisateurs ayant des droits d'accès à ce cours !</p>
+<p>Attention, un lien vers un cours ne sera visible qu'aux utilisateurs ayant des droits d'accès à ce cours !<br/>
+De même, à l'ajout de la ressource, seuls les cours où vous avez des droits de gestion vous seront proposés au niveau du formulaire 
+(filtre par rapport à la capacité moodle/role:assign "Attribuer des rôles aux utilisateurs").</p>
 
 <img src="https://i15.servimg.com/u/f15/17/05/22/27/course10.png" />
 
@@ -38,6 +40,7 @@ Pistes d'améliorations
 -----
 - Ajouter d'autres types d'affichage.
 - Améliorer le côté responsive du plugin.
+- Ajouter un paramètre de configuration pour indiquer si d'autres cours peuvent être pris en compte (pas seulement les cours que l'on gère) ?
 
 A propos
 ------

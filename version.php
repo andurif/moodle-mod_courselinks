@@ -24,9 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021051700; // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version   = 2021071000; // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2019051100; // Requires this Moodle version.
 $plugin->component = 'mod_courselinks'; // Full name of the plugin (used for diagnostics).
 $plugin->cron      = 0;
-$plugin->release = 'v3.10-r3';
+$plugin->release = 'v3.11-r1';
 $plugin->maturity  = MATURITY_STABLE;
