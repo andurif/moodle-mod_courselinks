@@ -9,7 +9,8 @@ This mod goals are to displays in a course links to others courses in order to h
 Requirements
 ------------
 - Moodle 3.7 or later.<br/>
-  -> Tests on Moodle 3.7 to 3.11.0 (tests on older moodle versions not made yet).<br/>
+  -> Tests on Moodle 3.7 to 3.11.8 (tests on older moodle versions not made yet).<br/>
+  -> Tests on Moodle 4 in progress.<br/>
 - Use Boost theme or a theme which extends Boost theme (use bootstrap).
 
 Installation
@@ -44,4 +45,4 @@ Possible improvements
 
 About us
 ------
-<a href="https://www.uca.fr" target="_blank">Université Clermont Auvergne</a> - 2021.<br/>
+<a href="https://www.uca.fr" target="_blank">Université Clermont Auvergne</a> - 2022.<br/>

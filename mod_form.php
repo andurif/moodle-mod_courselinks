@@ -72,13 +72,38 @@ class mod_courselinks_mod_form extends moodleform_mod {
             $mform->addElement('searchableselector', 'links', get_string('links', 'mod_courselinks'), $courses, array('multiple'));
             $mform->addHelpButton('links', 'links', 'mod_courselinks');
 
-            $displaychoices = array(
+            $displaychoices = [
                 'card'  => get_string('display:card', 'mod_courselinks'),
                 'list'  => get_string('display:list', 'mod_courselinks'),
                 'nav'   => get_string('display:nav', 'mod_courselinks'),
-            );
+            ];
             $mform->addElement('select', 'displaytype', get_string('display', 'mod_courselinks'), $displaychoices);
             $mform->addHelpButton('displaytype', 'display', 'mod_courselinks');
+
+            $openchoices = [
+                RESOURCELIB_DISPLAY_EMBED   => get_string('open:same', 'mod_courselinks'),
+                RESOURCELIB_DISPLAY_NEW     => get_string('open:new_tab', 'mod_courselinks'),
+                RESOURCELIB_DISPLAY_POPUP   => get_string('open:new_window', 'mod_courselinks'),
+            ];
+            $mform->addElement('select', 'opentype', get_string('opentype', 'mod_courselinks'), $openchoices);
+            $mform->addHelpButton('opentype', 'opentype', 'mod_ucacourselinks');
+            $mform->setDefault('opentype', RESOURCELIB_DISPLAY_NEW);
+
+            $carddispositionchoices = [
+                0   => get_string('resourcedisplayauto'),
+                2   => 2 . get_string('by_line', 'mod_courselinks'),
+                3   => 3 . get_string('by_line', 'mod_courselinks'),
+                4   => 4 . get_string('by_line', 'mod_courselinks'),
+                6   => 6 . get_string('by_line', 'mod_courselinks'),
+            ];
+            $mform->addElement('select', 'cards_by_line', get_string('card_disposition', 'mod_courselinks'), $carddispositionchoices);
+            $mform->addHelpButton('cards_by_line', 'card_disposition', 'mod_courselinks');
+            $mform->setDefault('cards_by_line', 0);
+            $mform->hideIf('cards_by_line', 'displaytype', 'neq', 'card');
+
+            $mform->addElement('advcheckbox', 'show_all_courses', get_string('show_all_courses', 'mod_courselinks'));
+            $mform->setDefault('show_all_courses', $this->current->show_all_courses == "1");
+            $mform->addHelpButton('show_all_courses', 'show_all_courses', 'mod_courselinks');
 
             $this->standard_coursemodule_elements();
             $this->add_action_buttons();

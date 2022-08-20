@@ -54,6 +54,7 @@ defined('MOODLE_INTERNAL') || die;
  * @return boolean
  */
 function xmldb_courselinks_upgrade($oldversion) {
+    global $CFG, $DB;
     // Automatically generated Moodle v3.5.0 release upgrade line.
     // Put any upgrade step following this.
 
@@ -71,6 +72,28 @@ function xmldb_courselinks_upgrade($oldversion) {
 
     // Automatically generated Moodle v3.10.0 release upgrade line.
     // Put any upgrade step following this.
+
+    // Automatically generated Moodle v3.11.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    if ($oldversion < 2022081800) {
+        $dbman = $DB->get_manager();
+        $table = new xmldb_table('courselinks');
+
+        $allcourses = new xmldb_field('show_all_courses', XMLDB_TYPE_INTEGER, 1, null, false, null, 0);
+        if (!$dbman->field_exists($table, $allcourses)) {
+            $dbman->add_field($table, $allcourses);
+        }
+        $opentype = new xmldb_field('opentype', XMLDB_TYPE_INTEGER, 1, null, false, null, 3);
+        if (!$dbman->field_exists($table, $opentype)) {
+            $dbman->add_field($table, $opentype);
+        }
+        $cards = new xmldb_field('cards_by_line', XMLDB_TYPE_INTEGER, 1, null, false, null, 0);
+        if (!$dbman->field_exists($table, $cards)) {
+            $dbman->add_field($table, $cards);
+        }
+
+    }
 
     return true;
 }

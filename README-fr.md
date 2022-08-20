@@ -9,7 +9,8 @@ Le but principal de ce module est de faire affiché sur un cours des liens vers 
 Pré-requis
 ------------
 - Moodle en version 3.7 ou plus récente.<br/>
-  -> Tests effectués sur des versions 3.7 à 3.11.0 (tests sur des versions précédentes par encore effectués).<br/>
+  -> Tests effectués sur des versions 3.7 à 3.11.8 (tests sur des versions précédentes par encore effectués).<br/>
+  -> Tests sur la version 4 de Moodle en cours.<br/>
 - Utilisation du thème Boost ou d'un thème qui étend le thème Boost (qui utilise bootstrap).
 
 Installation
@@ -44,4 +45,4 @@ Pistes d'améliorations
 
 A propos
 ------
-<a href="https://www.uca.fr" target="_blank">Université Clermont Auvergne</a> - 2021.<br/>
+<a href="https://www.uca.fr" target="_blank">Université Clermont Auvergne</a> - 2022.<br/>
