@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once($CFG->dirroot.'/mod/courselinks/lib.php');
+require_once($CFG->dirroot.'/lib/resourcelib.php');
 
 /**
  * Class mod_courselinks_mod_form
@@ -86,7 +87,7 @@ class mod_courselinks_mod_form extends moodleform_mod {
                 RESOURCELIB_DISPLAY_POPUP   => get_string('open:new_window', 'mod_courselinks'),
             ];
             $mform->addElement('select', 'opentype', get_string('opentype', 'mod_courselinks'), $openchoices);
-            $mform->addHelpButton('opentype', 'opentype', 'mod_ucacourselinks');
+            $mform->addHelpButton('opentype', 'opentype', 'mod_courselinks');
             $mform->setDefault('opentype', RESOURCELIB_DISPLAY_NEW);
 
             $carddispositionchoices = [
@@ -102,7 +103,9 @@ class mod_courselinks_mod_form extends moodleform_mod {
             $mform->hideIf('cards_by_line', 'displaytype', 'neq', 'card');
 
             $mform->addElement('advcheckbox', 'show_all_courses', get_string('show_all_courses', 'mod_courselinks'));
-            $mform->setDefault('show_all_courses', $this->current->show_all_courses == "1");
+            if (!empty($this->current->id)) {
+                $mform->setDefault('show_all_courses', $this->current->show_all_courses == "1");
+            }
             $mform->addHelpButton('show_all_courses', 'show_all_courses', 'mod_courselinks');
 
             $this->standard_coursemodule_elements();
