@@ -310,7 +310,7 @@ function courselinks_get_content_card($links, $opentype, $cards_by_line) {
                     array('class' => 'card-img-top img-fluid', 'style' => 'max-height: 200px;', 'target' => '_blank')). PHP_EOL, courselinks_get_html_link_options($opentype, $url));
             $contentlinks .= html_writer::start_tag('div', array('class' => 'card-body')) . PHP_EOL;
             $contentlinks .= html_writer::start_tag('h5', array('class' => 'card-title')) . PHP_EOL;
-            $contentlinks .= html_writer::link($url , $course->fullname, get_html_link_options($opentype, $url));
+            $contentlinks .= html_writer::link($url , $course->fullname, courselinks_get_html_link_options($opentype, $url));
             $contentlinks .= html_writer::end_tag('h5') . PHP_EOL;
             $contentlinks .= html_writer::end_tag('div') . PHP_EOL;
             $contentlinks .= html_writer::end_tag('div') . PHP_EOL;
