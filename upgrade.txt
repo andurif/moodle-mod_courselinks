@@ -1,0 +1,11 @@
+This file describes changes for the plugin.
+
+=== v3.11-r2 ===
+
+* Add display options (open in a new window/page, display all courses...).
+* Improve display on smaller screens for card content.
+
+=== v3.11-r1 ===
+
+* First plugin release. Mod to select and display links to other courses on the main course page.
+* Moodle 3.7 to 3.11 compatibility.
