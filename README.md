@@ -31,9 +31,10 @@ Display links to others courses according three display types for now:
 - Card: links to courses will be display as cards with their own course image.
 - List : links to courses will be listed one below the other.
 - Navigation menu: links to courses will be displayed on a menu where each course will be a menu item.
-<p>Be careful, a link is displayed only for users with access rights to this course !<br>
+<p>Be careful, a link is displayed only for users with access rights to this course (unless you force the display in the form) !<br>
 Besides when you want to add a resource only courses you manage will be displayed in the form 
 (filter on the moodle/role:assign "Assign roles to users" capability).</p>
+<p>You can also choose the way to display to linked course: in a new window, a new tab...</p>
 
 <img src="https://i15.servimg.com/u/f15/17/05/22/27/course10.png" />
 
