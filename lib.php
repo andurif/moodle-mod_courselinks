@@ -262,13 +262,13 @@ function courselinks_get_content($courselinks) {
         switch ($courselinks->displaytype) {
             case 'card':
             default:
-                $content = courselinks_get_content_card($links);
+                $content = courselinks_get_content_card($links, $courselinks->opentype, $courselinks->cards_by_line);
                 break;
             case 'list':
-                $content = courselinks_get_content_list($links);
+                $content = courselinks_get_content_list($links, $courselinks->opentype);
                 break;
             case 'nav':
-                $content = courselinks_get_content_nav($links);
+                $content = courselinks_get_content_nav($links, $courselinks->opentype);
                 break;
         }
     }
