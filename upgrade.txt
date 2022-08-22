@@ -1,5 +1,9 @@
 This file describes changes for the plugin.
 
+=== v3.11-r3 ===
+
+* Fix database error in plugin first install.
+
 === v3.11-r2 ===
 
 * Add display options (open in a new window/page, display all courses...).

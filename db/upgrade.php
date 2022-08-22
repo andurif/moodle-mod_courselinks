@@ -76,7 +76,7 @@ function xmldb_courselinks_upgrade($oldversion) {
     // Automatically generated Moodle v3.11.0 release upgrade line.
     // Put any upgrade step following this.
 
-    if ($oldversion < 2022081800) {
+    if ($oldversion < 2022081800 || $oldversion < 2022082200) {
         $dbman = $DB->get_manager();
         $table = new xmldb_table('courselinks');
 

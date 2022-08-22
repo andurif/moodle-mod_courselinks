@@ -14,6 +14,9 @@
         <FIELD NAME="displaytype" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="links" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="show_all_courses" TYPE="int" LENGTH="4" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="opentype" TYPE="int" LENGTH="4" NOTNULL="false" DEFAULT="3" SEQUENCE="false"/>
+        <FIELD NAME="cards_by_line" TYPE="int" LENGTH="4" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
