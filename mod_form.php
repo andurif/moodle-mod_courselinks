@@ -109,7 +109,7 @@ class mod_courselinks_mod_form extends moodleform_mod {
             $mform->addHelpButton('show_all_courses', 'show_all_courses', 'mod_courselinks');
 
             $this->standard_coursemodule_elements();
-            $this->add_action_buttons();
+            $this->add_action_buttons(true, false, null);
         } else {
             $this->standard_hidden_coursemodule_elements();
             $mform->addElement('html', get_string('error_courses', 'mod_courselinks'));
