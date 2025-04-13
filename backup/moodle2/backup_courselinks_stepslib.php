@@ -41,7 +41,7 @@ class backup_courselinks_activity_structure_step extends backup_activity_structu
      */
     protected function define_structure() {
         $courselinks = new backup_nested_element('courselinks', ['id'], [
-            'name', 'intro', 'introformat', 'displaytype', 'timemodified', 'links'
+            'name', 'intro', 'introformat', 'displaytype', 'timemodified', 'links',
         ]);
 
         $courselinks->set_source_table('courselinks', ['id' => backup::VAR_ACTIVITYID]);

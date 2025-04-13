@@ -28,8 +28,9 @@ defined('MOODLE_INTERNAL') || die;
 
 /**
  * Defines the type of the activity and specific supports.
- * @param $feature
- * @return bool|int|null
+ * @param string $feature FEATURE_xx constant for requested feature
+ * @return mixed true if module supports feature,
+ * false if not, null if doesn't know or string for the module purpose.
  */
 function courselinks_supports($feature) {
     switch ($feature) {
@@ -308,8 +309,11 @@ function courselinks_get_content_card($links, $opentype, $cards_by_line) {
             $contentlinks = html_writer::start_tag('div', ['class' => $class_by_number[$cards_by_line] .
                     ' text-center', 'style' => 'margin-bottom: 20px;']) . PHP_EOL;
             $contentlinks .= html_writer::start_tag('div', ['class' => 'card shadow-lg h-100']) . PHP_EOL;
-            $contentlinks .= html_writer::link($url , html_writer::img(courselinks_get_course_image($course), $course->fullname,
-                    ['class' => 'card-img-top img-fluid', 'style' => 'max-height: 200px;', 'target' => '_blank']). PHP_EOL, courselinks_get_html_link_options($opentype, $url));
+            $contentlinks .= html_writer::link($url , html_writer::img(courselinks_get_course_image($course), $course->fullname, [
+                'class' => 'card-img-top img-fluid',
+                'style' => 'max-height: 200px;',
+                'target' => '_blank',
+            ]). PHP_EOL, courselinks_get_html_link_options($opentype, $url));
             $contentlinks .= html_writer::start_tag('div', ['class' => 'card-body']) . PHP_EOL;
             $contentlinks .= html_writer::start_tag('h5', ['class' => 'card-title']) . PHP_EOL;
             $contentlinks .= html_writer::link($url , $course->fullname, courselinks_get_html_link_options($opentype, $url));
@@ -337,7 +341,7 @@ function courselinks_get_content_card($links, $opentype, $cards_by_line) {
 function courselinks_get_content_nav($links, $opentype) {
     $content = html_writer::start_tag('ul', [
         'class' => 'nav nav-pills justify-content-center',
-        'style' => 'list-style: none;'
+        'style' => 'list-style: none;',
     ]). PHP_EOL;
     foreach ($links as $link) {
         try {
@@ -351,7 +355,7 @@ function courselinks_get_content_nav($links, $opentype) {
             $contentlinks = html_writer::start_tag('li', ['class' => 'nav-item']). PHP_EOL;
             $contentlinks .= html_writer::link($url , $course->fullname, courselinks_get_html_link_options($opentype, $url, [
                 'class' => 'nav-link active',
-                'style' => 'border: 1px solid white'
+                'style' => 'border: 1px solid white',
             ])) . PHP_EOL;
             $contentlinks .= html_writer::end_tag('li') . PHP_EOL;
             $content = (!empty($contentlinks)) ? $content . $contentlinks : $content;
@@ -383,7 +387,7 @@ function courselinks_get_content_list($links, $opentype) {
         if (courselinks_has_access($course)) {
             $url = new moodle_url('/course/view.php', ['id' => $course->id]);
             $contentlinks = html_writer::link($url , $course->fullname, courselinks_get_html_link_options($opentype, $url, [
-                'class' => 'list-group-item list-group-item-action'
+                'class' => 'list-group-item list-group-item-action',
             ])) . PHP_EOL;
             $content = (!empty($contentlinks)) ? $content . $contentlinks : $content;
         }
@@ -457,7 +461,7 @@ function courselinks_get_generated_image_for_id($id) {
 
 /**
  * Function to check if the current user has access or right to the course given in param.
- * @param $course the course.
+ * @param object $course the course.
  * @return true if the user has access and false in other cases.
  */
 function courselinks_has_access($course) {

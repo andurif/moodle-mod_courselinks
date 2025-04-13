@@ -59,7 +59,7 @@ class mobile {
         // Pre-format some of the texts for the mobile app.
         $courselinks->name = external_format_string($courselinks->name, $context);
         [$courselinks->intro, $courselinks->introformat] = external_format_text(
-            $courselinks->intro, $courselinks->introformat, $context,'mod_courselinks', 'intro');
+            $courselinks->intro, $courselinks->introformat, $context, 'mod_courselinks', 'intro');
 
         $data = [
             'cmid' => $cm->id,

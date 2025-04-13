@@ -67,12 +67,7 @@ class restore_courselinks_activity_task extends restore_activity_task {
      * to the activity to be executed by the link decoder
      */
     public static function define_decode_rules() {
-        $rules = [];
-
-        // $rules[] = new restore_decode_rule('COURSELINKSVIEWBYID', '/mod/courselinks/view.php?id=$1', 'course_module');
-        // $rules[] = new restore_decode_rule('COURSELINKSINDEX', '/mod/courselinks/index.php?id=$1', 'course');
-
-        return $rules;
+        return [];
     }
 
     /**
@@ -87,7 +82,6 @@ class restore_courselinks_activity_task extends restore_activity_task {
         $rules[] = new restore_log_rule('courselinks', 'add', 'view.php?id={course_module}', '{courselinks}');
         $rules[] = new restore_log_rule('courselinks', 'update', 'view.php?id={course_module}', '{courselinks}');
         $rules[] = new restore_log_rule('courselinks', 'view', 'view.php?id={course_module}', '{courselinks}');
-        // $rules[] = new restore_log_rule('courselinks', 'fetch', 'view.php?id={course_module}', '{courselinks}');
 
         return $rules;
     }
