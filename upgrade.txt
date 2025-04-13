@@ -1,5 +1,10 @@
 This file describes changes for the plugin.
 
+=== v4x.01 ===
+
+* Add moodle 4.x versions compatibility.
+* Clean code.
+
 === v3.11-r3 ===
 
 * Fix database error in plugin first install.

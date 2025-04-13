@@ -4,13 +4,12 @@ Ce module permet de faire des liens entre plusieurs cours. Ces liens seront disp
 
 But
 ------------
-Le but principal de ce module est de faire affiché sur un cours des liens vers d'autres cours pour faciliter la navigation entre ceux-ci.
+Le but principal de ce module est de faire afficher sur un cours des liens vers d'autres cours pour faciliter la navigation entre ceux-ci.
 
 Pré-requis
 ------------
-- Moodle en version 3.7 ou plus récente.<br/>
-  -> Tests effectués sur des versions 3.7 à 3.11.8 (tests sur des versions précédentes par encore effectués).<br/>
-  -> Tests sur la version 4 de Moodle en cours.<br/>
+- Moodle en version 3.7 à 4.5.<br/>
+  -> Tests toujours en cours.<br/>
 - Utilisation du thème Boost ou d'un thème qui étend le thème Boost (qui utilise bootstrap).
 
 Installation
@@ -21,7 +20,7 @@ Installation
 > git clone https://github.com/andurif/moodle-mod_courselinks.git mod/courselinks
 
 - Téléchargement:
-> Télécharger le zip depuis https://github.com/andurif/moodle-mod_courselinks/archive/refs/heads/main.zip, dézipper l'archive dans le dossier mod/ et renommez le "courselinks" si besoin ou installez-le depuis la page d'installation des plugins si vous possédeez les bons droits.
+> Télécharger le zip depuis https://github.com/andurif/moodle-mod_courselinks/archive/refs/heads/main.zip, dézipper l'archive dans le dossier mod/ et renommez-le "courselinks" si besoin ou installez-le depuis la page d'installation des plugins si vous possédez les bons droits.
 
 2. Aller sur la page de notifications pour finaliser l'installation du plugin.
 
@@ -34,16 +33,20 @@ Afficher sur un cours des liens vers d'autres cours selon trois types d'affichag
 <p>Attention, un lien vers un cours ne sera visible qu'aux utilisateurs ayant des droits d'accès à ce cours (sauf si vous avez paramétré le forçage de l'affichage dans le formulaire) !<br/>
 De même, à l'ajout de la ressource, seuls les cours où vous avez des droits de gestion vous seront proposés au niveau du formulaire 
 (filtre par rapport à la capacité moodle/role:assign "Attribuer des rôles aux utilisateurs").</p>
-<p>Vous pouvez aussi choisir la façon dont afficher le cours lié: ouvrir dans un nouvel onglet, une fenêtre surgissante, etc...</p>
+<p>Vous pouvez aussi choisir la façon dont afficher le cours lié: ouvrir dans un nouvel onglet, une fenêtre surgissante, etc.</p>
 
-<img src="https://i15.servimg.com/u/f15/17/05/22/27/course10.png" />
+<img alt="Capture activité cours lié" src="https://i15.servimg.com/u/f15/17/05/22/27/course10.png" />
 
 Pistes d'améliorations
 -----
 - Ajouter d'autres types d'affichage.
 - Améliorer le côté responsive du plugin.
+- Être moins dépendant d'un thème qui étend le thème Boost et tester avec d'autres types de thèmes.
 - Ajouter un paramètre de configuration pour indiquer si d'autres cours peuvent être pris en compte (pas seulement les cours que l'on gère) ?
 
 A propos
 ------
-<a href="https://www.uca.fr" target="_blank">Université Clermont Auvergne</a> - 2022.<br/>
+<a href="https://www.uca.fr" target="_blank">Université Clermont Auvergne</a> -
+<a href="https://github.com/UCA-Squad" target="_blank">UCA Squad</a>
+
+© UCA - 2025

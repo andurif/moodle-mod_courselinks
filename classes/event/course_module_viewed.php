@@ -16,9 +16,10 @@
 
 /**
  * The mod_courselinks course module viewed event.
- * @package  mod_courselinks
- * @copyright  2021 Université Clermont Auvergne
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
+ *
+ * @package     mod_courselinks
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace mod_courselinks\event;
@@ -28,9 +29,9 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * The mod_courselinks course module viewed event class.
  *
- * @package    mod_courselinks
- * @since      Moodle 3.8
- * @copyright  2021 Université Clermont Auvergne
+ * @package     mod_courselinks
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course_module_viewed extends \core\event\course_module_viewed {
 

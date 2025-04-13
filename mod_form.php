@@ -18,7 +18,7 @@
  * Add/update module form.
  *
  * @package    mod_courselinks
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -38,7 +38,7 @@ class mod_courselinks_mod_form extends moodleform_mod {
      * @throws Exception
      * @throws coding_exception
      */
-    function definition() {
+    public function definition() {
         $mform = $this->_form;
         $error = null;
 
@@ -70,7 +70,7 @@ class mod_courselinks_mod_form extends moodleform_mod {
             $attributes['rows'] = 5;
             $element->setAttributes($attributes);
 
-            $mform->addElement('searchableselector', 'links', get_string('links', 'mod_courselinks'), $courses, array('multiple'));
+            $mform->addElement('searchableselector', 'links', get_string('links', 'mod_courselinks'), $courses, ['multiple']);
             $mform->addHelpButton('links', 'links', 'mod_courselinks');
 
             $displaychoices = [
@@ -123,7 +123,7 @@ class mod_courselinks_mod_form extends moodleform_mod {
      * @param array $files
      * @return array
      */
-    function validation($data, $files) {
+    public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
         if ((isset($data['links']) && count($data['links']) < 1) || (count($data['links']) == 1 && empty($data['links'][0])) ) {

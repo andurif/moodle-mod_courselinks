@@ -18,8 +18,7 @@
  * Defines backup_courselinks_activity_task class
  *
  * @package     mod_courselinks
- * @category    backup
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

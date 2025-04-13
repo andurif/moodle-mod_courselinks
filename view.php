@@ -18,33 +18,33 @@
  * Courselinks module
  *
  * @package mod_courselinks
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne.
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once("../../config.php");
 
-$id = optional_param('id', 0, PARAM_INT);    // Course Module ID, or
+$id = optional_param('id', 0, PARAM_INT);    // Course Module ID.
 $c = optional_param('courselinks', 0, PARAM_INT);     // Courselinks ID.
 
 if ($id) {
-    $PAGE->set_url('/mod/courselinks/index.php', array('id' => $id));
+    $PAGE->set_url('/mod/courselinks/index.php', ['id' => $id]);
     if (!$cm = get_coursemodule_from_id('courselinks', $id)) {
         throw new moodle_exception('invalidcoursemodule');
     }
-    if (!$course = $DB->get_record("course", array("id" => $cm->course))) {
+    if (!$course = $DB->get_record("course", ["id" => $cm->course])) {
         throw new moodle_exception('coursemisconf');
     }
 
-    if (!$courselinks = $DB->get_record("courselinks", array("id" => $cm->instance))) {
+    if (!$courselinks = $DB->get_record("courselinks", ["id" => $cm->instance])) {
         throw new moodle_exception('invalidcoursemodule');
     }
 } else {
-    $PAGE->set_url('/mod/courselinks/index.php', array( 'courselinks' => $c));
-    if (!$courselinks = $DB->get_record("courselinks", array("id" => $c))) {
+    $PAGE->set_url('/mod/courselinks/index.php', [ 'courselinks' => $c]);
+    if (!$courselinks = $DB->get_record("courselinks", ["id" => $c])) {
         throw new moodle_exception('invalidcoursemodule');
     }
-    if (!$course = $DB->get_record("course", array( "id" => $courselinks->course)) ) {
+    if (!$course = $DB->get_record("course", [ "id" => $courselinks->course]) ) {
         throw new moodle_exception('coursemisconf');
     }
     if (!$cm = get_coursemodule_from_instance("courselinks", $courselinks->id, $course->id)) {

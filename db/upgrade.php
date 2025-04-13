@@ -35,8 +35,8 @@
 /**
  * This file keeps track of upgrades to the lti module
  *
- * @package mod_courselinks
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne.
+ * @package  mod_courselinks
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -93,6 +93,8 @@ function xmldb_courselinks_upgrade($oldversion) {
             $dbman->add_field($table, $cards);
         }
 
+        // Main savepoint reached.
+        upgrade_main_savepoint(true, 2022082200);
     }
 
     return true;

@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Provides {@see backup_subcourse_activity_structure_step} class.
+ * Define all the backup steps that will be used by the backup_courselinks_activity_task
  *
  * @package     mod_courselinks
  * @category    backup
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -40,10 +40,11 @@ class backup_courselinks_activity_structure_step extends backup_activity_structu
      * Defines the complete courselinks structure for backup
      */
     protected function define_structure() {
-        $courselinks = new backup_nested_element('courselinks', array('id'), array(
-            'name', 'intro', 'introformat', 'displaytype', 'timemodified', 'links'));
+        $courselinks = new backup_nested_element('courselinks', ['id'], [
+            'name', 'intro', 'introformat', 'displaytype', 'timemodified', 'links'
+        ]);
 
-        $courselinks->set_source_table('courselinks', array('id' => backup::VAR_ACTIVITYID));
+        $courselinks->set_source_table('courselinks', ['id' => backup::VAR_ACTIVITYID]);
 
         return $this->prepare_activity_structure($courselinks);
     }

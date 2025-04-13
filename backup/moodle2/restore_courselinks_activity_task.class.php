@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Define all the backup steps that will be used by the backup_courselinks_activity_task
  *
  * @package     mod_courselinks
- * @category    backup
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,8 +30,7 @@ require_once($CFG->dirroot . '/mod/courselinks/backup/moodle2/restore_courselink
  * Defines all settings and step to perform the activity restore.
  *
  * @package     mod_courselinks
- * @category    backup
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_courselinks_activity_task extends restore_activity_task {
@@ -56,9 +55,9 @@ class restore_courselinks_activity_task extends restore_activity_task {
      * processed by the link decoder
      */
     public static function define_decode_contents() {
-        $contents = array();
+        $contents = [];
 
-        $contents[] = new restore_decode_content('courselinks', array('intro'), 'courselinks');
+        $contents[] = new restore_decode_content('courselinks', ['intro'], 'courselinks');
 
         return $contents;
     }
@@ -68,7 +67,7 @@ class restore_courselinks_activity_task extends restore_activity_task {
      * to the activity to be executed by the link decoder
      */
     public static function define_decode_rules() {
-        $rules = array();
+        $rules = [];
 
         // $rules[] = new restore_decode_rule('COURSELINKSVIEWBYID', '/mod/courselinks/view.php?id=$1', 'course_module');
         // $rules[] = new restore_decode_rule('COURSELINKSINDEX', '/mod/courselinks/index.php?id=$1', 'course');
@@ -83,7 +82,7 @@ class restore_courselinks_activity_task extends restore_activity_task {
      * of {@see restore_log_rule} objects
      */
     public static function define_restore_log_rules() {
-        $rules = array();
+        $rules = [];
 
         $rules[] = new restore_log_rule('courselinks', 'add', 'view.php?id={course_module}', '{courselinks}');
         $rules[] = new restore_log_rule('courselinks', 'update', 'view.php?id={course_module}', '{courselinks}');
@@ -104,7 +103,7 @@ class restore_courselinks_activity_task extends restore_activity_task {
      * activity level. All them are rules not linked to any module instance (cmid = 0)
      */
     public static function define_restore_log_rules_for_course() {
-        $rules = array();
+        $rules = [];
 
         // Fix old wrong uses (missing extension).
         $rules[] = new restore_log_rule('courselinks', 'view all', 'index.php?id={course}', null);

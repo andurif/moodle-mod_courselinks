@@ -17,8 +17,8 @@
 /**
  * Provides {@see \mod_courselinks\output\mobile} class.
  *
- * @package mod_courselinks
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne.
+ * @package     mod_courselinks
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,10 +31,9 @@ require_once($CFG->dirroot . '/mod/courselinks/lib.php');
 /**
  * Controls the display of the plugin in the Mobile App.
  *
- * @package    mod_courselinks
- * @category  output
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     mod_courselinks
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mobile {
 
@@ -59,8 +58,8 @@ class mobile {
 
         // Pre-format some of the texts for the mobile app.
         $courselinks->name = external_format_string($courselinks->name, $context);
-        [$courselinks->intro, $courselinks->introformat] = external_format_text($courselinks->intro, $courselinks->introformat, $context,
-            'mod_courselinks', 'intro');
+        [$courselinks->intro, $courselinks->introformat] = external_format_text(
+            $courselinks->intro, $courselinks->introformat, $context,'mod_courselinks', 'intro');
 
         $data = [
             'cmid' => $cm->id,

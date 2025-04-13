@@ -8,10 +8,9 @@ This mod goals are to displays in a course links to others courses in order to h
 
 Requirements
 ------------
-- Moodle 3.7 or later.<br/>
-  -> Tests on Moodle 3.7 to 3.11.8 (tests on older moodle versions not made yet).<br/>
-  -> Tests on Moodle 4 in progress.<br/>
-- Use Boost theme or a theme which extends Boost theme (use bootstrap).
+- Moodle 3.7 to 4.5.<br/>
+  -> Tests still in progress.<br/>
+- Use Boost theme or a theme which extends Boost theme (need bootstrap).
 
 Installation
 ------------
@@ -36,14 +35,18 @@ Besides when you want to add a resource only courses you manage will be displaye
 (filter on the moodle/role:assign "Assign roles to users" capability).</p>
 <p>You can also choose the way to display to linked course: in a new window, a new tab...</p>
 
-<img src="https://i15.servimg.com/u/f15/17/05/22/27/course10.png" />
+<img alt="Courseliks mod screenshot" src="https://i15.servimg.com/u/f15/17/05/22/27/course10.png" />
 
 Possible improvements
 -----
 - Add other display types.
 - Improve responsive.
-- Add setting to setup if we want to use other courses than only courses we manage ?
+- Be less dependent on an extended Boost theme and testing more on other theme types.
+- Add setting to set up if we want to use other courses than only courses we manage ?
 
 About us
 ------
-<a href="https://www.uca.fr" target="_blank">Université Clermont Auvergne</a> - 2022.<br/>
+<a href="https://www.uca.fr" target="_blank">Université Clermont Auvergne</a> -
+<a href="https://github.com/UCA-Squad" target="_blank">UCA Squad</a>
+
+© UCA - 2025

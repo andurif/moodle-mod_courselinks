@@ -18,7 +18,7 @@
  * Mandatory public API of url module
  *
  * @package    mod_courselinks
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -45,13 +45,15 @@ function courselinks_supports($feature) {
         case FEATURE_NO_VIEW_LINK:            return true;
         default: return null;
     }
+
+    return null;
 }
 
 /**
  * Save a courselinks instance in the database.
  * @param object $data
  * @param object $mform
- * @return int new instance id
+ * @return int new instance id.
  */
 function courselinks_add_instance($data, $mform) {
     global $DB;
@@ -102,7 +104,7 @@ function courselinks_update_instance($data, $mform) {
 function courselinks_delete_instance($id) {
     global $DB;
 
-    if (!$courselink = $DB->get_record('courselinks', array('id' => $id))) {
+    if (!$courselink = $DB->get_record('courselinks', ['id' => $id])) {
         return false;
     }
 
@@ -110,7 +112,7 @@ function courselinks_delete_instance($id) {
     \core_completion\api::update_completion_date_event($cm->id, 'courselinks', $id, null);
 
     // Note: all context files are deleted automatically.
-    $DB->delete_records('courselinks', array('id' => $courselink->id));
+    $DB->delete_records('courselinks', ['id' => $courselink->id]);
 
     return true;
 }
@@ -125,7 +127,7 @@ function courselinks_delete_instance($id) {
 function courselinks_get_coursemodule_info($coursemodule) {
     global $CFG, $DB;
 
-    if (!$resource = $DB->get_record('courselinks', array('id' => $coursemodule->instance),
+    if (!$resource = $DB->get_record('courselinks', ['id' => $coursemodule->instance],
         'id, course, name, intro, introformat, displaytype, links, timemodified, show_all_courses, opentype, cards_by_line')) {
         return null;
     }
@@ -146,6 +148,7 @@ function courselinks_get_coursemodule_info($coursemodule) {
 
 /**
  * Function to return courses on which we have permissions to do a link.
+ * @return array courses which can be displayed with the plugin.
  * @throws coding_exception
  */
 function courselinks_get_linkable_courses() {
@@ -157,8 +160,7 @@ function courselinks_get_linkable_courses() {
             if (!has_capability('moodle/role:assign', context_course::instance($mycourse->id))) {
                 $tounset = true;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $tounset = true;
         }
 
@@ -177,11 +179,10 @@ function courselinks_get_linkable_courses() {
 /**
  * Fonction to get the list of courses we want to display as an array.
  * This array is specificly use to render this resource in the mobile moodle app.
- * @param $courselinks the resource.
+ * @param object $courselinks the resource.
  * @return array an array with link to course and name as items.
  */
-function courselinks_get_courses_as_array($courselinks)
-{
+function courselinks_get_courses_as_array($courselinks) {
     $links = json_decode($courselinks->links);
     $courses = [];
 
@@ -194,7 +195,7 @@ function courselinks_get_courses_as_array($courselinks)
         }
 
         if (courselinks_has_access($course)) {
-            $url = new moodle_url('/course/view.php', array('id' => $course->id));
+            $url = new moodle_url('/course/view.php', ['id' => $course->id]);
             $courses[] = [
                 'href'  => $url->out(),
                 'title' => $course->fullname,
@@ -206,14 +207,14 @@ function courselinks_get_courses_as_array($courselinks)
 }
 
 /**
- * Function to set the module content in a label
- * @param cm_info $cm course module id
+ * Function to set the module content in a label.
+ * @param cm_info $cm course module id.
  * @throws dml_exception
  */
 function courselinks_cm_info_view(cm_info $cm) {
     global $DB;
 
-    $courselinks = $DB->get_record('courselinks', array('id' => $cm->instance));
+    $courselinks = $DB->get_record('courselinks', ['id' => $cm->instance]);
     if ($courselinks) {
         $links = json_decode($courselinks->links);
         $content = ($links) ? courselinks_get_content($courselinks) : "";
@@ -229,8 +230,8 @@ function courselinks_cm_info_view(cm_info $cm) {
 
 /**
  * Return the content in the function of the selected type in the form.
- * @param $courselinks the module
- * @return string the content to display
+ * @param object $courselinks the module.
+ * @return string the content to display.
  * @throws dml_exception
  * @throws moodle_exception
  * @throws require_login_exception
@@ -278,23 +279,23 @@ function courselinks_get_content($courselinks) {
 
 /**
  * Returns html content if the user selects to display links with cards.
- * @param $links
- * @param $opentype the selected option for opening.
- * @param $cards_by_line the number of cards to display by line.
+ * @param array $links links to display.
+ * @param string $opentype the selected option for opening.
+ * @param int $cards_by_line the number of cards to display by line.
  * @return string the content.
  * @throws dml_exception
  * @throws moodle_exception
  * @throws require_login_exception
  */
 function courselinks_get_content_card($links, $opentype, $cards_by_line) {
-    $class_by_number = array(
+    $class_by_number = [
         0 => (count($links) <= 4) ? 'col-lg-3 col-md-4 col-sm-6 col-xs-12' : 'col-lg-2 col-md-4 col-sm-6 col-xs-12',
         2 => 'col-lg-6 col-md-6 col-sm-6 col-xs-12',
         3 => 'col-lg-4 col-md-4 col-sm-6 col-xs-12',
         4 => 'col-lg-3 col-md-4 col-sm-6 col-xs-12',
         6 => 'col-lg-2 col-md-3 col-sm-6 col-xs-12',
-    );
-    $content = html_writer::start_tag('div', array('class' => 'col-12 justify-content-center card-deck')). PHP_EOL;;
+    ];
+    $content = html_writer::start_tag('div', ['class' => 'col-12 justify-content-center card-deck']). PHP_EOL;;
     foreach ($links as $link) {
         try {
             $course = get_course($link);
@@ -303,13 +304,14 @@ function courselinks_get_content_card($links, $opentype, $cards_by_line) {
             continue;
         }
         if (courselinks_has_access($course)) {
-            $url = new moodle_url('/course/view.php', array('id' => $course->id));
-            $contentlinks = html_writer::start_tag('div', array('class' => $class_by_number[$cards_by_line] . ' text-center', 'style' => 'margin-bottom: 20px;')) . PHP_EOL;
-            $contentlinks .= html_writer::start_tag('div', array('class' => 'card shadow-lg h-100')) . PHP_EOL;
+            $url = new moodle_url('/course/view.php', ['id' => $course->id]);
+            $contentlinks = html_writer::start_tag('div', ['class' => $class_by_number[$cards_by_line] .
+                    ' text-center', 'style' => 'margin-bottom: 20px;']) . PHP_EOL;
+            $contentlinks .= html_writer::start_tag('div', ['class' => 'card shadow-lg h-100']) . PHP_EOL;
             $contentlinks .= html_writer::link($url , html_writer::img(courselinks_get_course_image($course), $course->fullname,
-                    array('class' => 'card-img-top img-fluid', 'style' => 'max-height: 200px;', 'target' => '_blank')). PHP_EOL, courselinks_get_html_link_options($opentype, $url));
-            $contentlinks .= html_writer::start_tag('div', array('class' => 'card-body')) . PHP_EOL;
-            $contentlinks .= html_writer::start_tag('h5', array('class' => 'card-title')) . PHP_EOL;
+                    ['class' => 'card-img-top img-fluid', 'style' => 'max-height: 200px;', 'target' => '_blank']). PHP_EOL, courselinks_get_html_link_options($opentype, $url));
+            $contentlinks .= html_writer::start_tag('div', ['class' => 'card-body']) . PHP_EOL;
+            $contentlinks .= html_writer::start_tag('h5', ['class' => 'card-title']) . PHP_EOL;
             $contentlinks .= html_writer::link($url , $course->fullname, courselinks_get_html_link_options($opentype, $url));
             $contentlinks .= html_writer::end_tag('h5') . PHP_EOL;
             $contentlinks .= html_writer::end_tag('div') . PHP_EOL;
@@ -325,15 +327,18 @@ function courselinks_get_content_card($links, $opentype, $cards_by_line) {
 
 /**
  * Returns html content if the user selects to display links with a list.
- * @param $links the course list
- * @param $opentype the selected option for opening.
+ * @param array $links the course list.
+ * @param string $opentype the selected option for opening.
  * @return string the content.
  * @throws dml_exception
  * @throws moodle_exception
  * @throws require_login_exception
  */
 function courselinks_get_content_nav($links, $opentype) {
-    $content = html_writer::start_tag('ul', array('class' => 'nav nav-pills justify-content-center', 'style' => 'list-style: none;')). PHP_EOL;
+    $content = html_writer::start_tag('ul', [
+        'class' => 'nav nav-pills justify-content-center',
+        'style' => 'list-style: none;'
+    ]). PHP_EOL;
     foreach ($links as $link) {
         try {
             $course = get_course($link);
@@ -342,9 +347,12 @@ function courselinks_get_content_nav($links, $opentype) {
             continue;
         }
         if (courselinks_has_access($course)) {
-            $url = new moodle_url('/course/view.php', array('id' => $course->id));
-            $contentlinks = html_writer::start_tag('li', array('class' => 'nav-item')). PHP_EOL;
-            $contentlinks .= html_writer::link($url , $course->fullname, courselinks_get_html_link_options($opentype, $url, array('class' => 'nav-link active', 'style' => 'border: 1px solid white'))) . PHP_EOL;
+            $url = new moodle_url('/course/view.php', ['id' => $course->id]);
+            $contentlinks = html_writer::start_tag('li', ['class' => 'nav-item']). PHP_EOL;
+            $contentlinks .= html_writer::link($url , $course->fullname, courselinks_get_html_link_options($opentype, $url, [
+                'class' => 'nav-link active',
+                'style' => 'border: 1px solid white'
+            ])) . PHP_EOL;
             $contentlinks .= html_writer::end_tag('li') . PHP_EOL;
             $content = (!empty($contentlinks)) ? $content . $contentlinks : $content;
         }
@@ -356,15 +364,15 @@ function courselinks_get_content_nav($links, $opentype) {
 
 /**
  * Returns html content if the user selects to display links with a navigation menu.
- * @param $links the course list
- * @param $opentype the selected option for opening.
+ * @param array $links the course list.
+ * @param string $opentype the selected option for opening.
  * @return string the content.
  * @throws dml_exception
  * @throws moodle_exception
  * @throws require_login_exception
  */
 function courselinks_get_content_list($links, $opentype) {
-    $content = html_writer::start_tag('div', array('class' => 'nav list-group justify-content-center')) . PHP_EOL;
+    $content = html_writer::start_tag('div', ['class' => 'nav list-group justify-content-center']) . PHP_EOL;
     foreach ($links as $link) {
         try {
             $course = get_course($link);
@@ -373,8 +381,10 @@ function courselinks_get_content_list($links, $opentype) {
             continue;
         }
         if (courselinks_has_access($course)) {
-            $url = new moodle_url('/course/view.php', array('id' => $course->id));
-            $contentlinks = html_writer::link($url , $course->fullname, courselinks_get_html_link_options($opentype, $url, array('class' => 'list-group-item list-group-item-action'))) . PHP_EOL;
+            $url = new moodle_url('/course/view.php', ['id' => $course->id]);
+            $contentlinks = html_writer::link($url , $course->fullname, courselinks_get_html_link_options($opentype, $url, [
+                'class' => 'list-group-item list-group-item-action'
+            ])) . PHP_EOL;
             $content = (!empty($contentlinks)) ? $content . $contentlinks : $content;
         }
     }
@@ -385,40 +395,35 @@ function courselinks_get_content_list($links, $opentype) {
 
 /**
  * Get the html element that represents the link to the destination course given in paramaters.
- * @param $opentype the selected option for opening.
- * @param $url the url course link.
- * @param $course the destination course.
+ * @param string $opentype the selected option for opening.
+ * @param string $url the url course link.
+ * @param array $givenoptions the options.
+ * @return array all the options.
  */
-function courselinks_get_html_link_options($opentype, $url, $givenoptions = array()) {
-    $options = array();
+function courselinks_get_html_link_options($opentype, $url, $givenoptions = []) {
+    $options = [];
     if ($opentype == RESOURCELIB_DISPLAY_NEW) {
         // Open the link in a new tab.
-        $options = array('target' => '_blank');
-    } elseif ($opentype == RESOURCELIB_DISPLAY_POPUP) {
+        $options = ['target' => '_blank'];
+    } else if ($opentype == RESOURCELIB_DISPLAY_POPUP) {
         // Open the link in a new popup window.
         $fullurl = "$url&amp;redirect=1";
-//        $options = empty($resource->displayoptions) ? array() : unserialize($resource->displayoptions);
-//        $width  = empty($options['popupwidth'])  ? 620 : $options['popupwidth'];
-//        $height = empty($options['popupheight']) ? 450 : $options['popupheight'];
         $wh = "width=620,height=450,toolbar=no,location=no,menubar=no,copyhistory=no,status=no,directories=no,scrollbars=yes,resizable=yes";
-        $options = array('onclick' => "window.open('$fullurl', '', '$wh'); return false;");
+        $options = ['onclick' => "window.open('$fullurl', '', '$wh'); return false;"];
     }
-    // Else: open the link in the current tab, no need to add some options here.
 
     return array_merge($givenoptions, $options);
 }
 
 /**
  * Returns the course image.
- * @param $course the course.
+ * @param object $course the course.
  * @return false|mixed|object|string|null the image.
  * @throws dml_exception
  */
 function courselinks_get_course_image($course) {
-    global $PAGE;
     $image = (class_exists(course_summary_exporter::class) && method_exists(course_summary_exporter::class, 'get_course_image'))
         ? course_summary_exporter::get_course_image($course) : null;
-    // $image = (!$image) ? $PAGE->get_renderer('core')->get_generated_image_for_id($course->id) : $image; //@todo: some errors after duplicate action
     $image = (!$image) ? courselinks_get_generated_image_for_id($course->id) : $image;
 
     return $image;
@@ -426,10 +431,9 @@ function courselinks_get_course_image($course) {
 
 /**
  * Get the course pattern datauri to show on a course card.
- *
  * The datauri is an encoded svg that can be passed as a url.
- * @param int $id Id to use when generating the pattern
- * @return string datauri
+ * @param int $id Id to use when generating the pattern.
+ * @return string datauri.
  */
 function courselinks_get_generated_image_for_id($id) {
     if (get_config('core_admin', 'coursecolor1')) {
@@ -467,22 +471,18 @@ function courselinks_has_access($course) {
     $coursecontext = context_course::instance($course->id);
 
     // Make sure the course itself is not hidden.
-    if (is_role_switched($course->id)) {
-        // When switching roles ignore the hidden flag - user had to be in course to do the switch.
-    } else {
-        if (!$course->visible and !has_capability('moodle/course:viewhiddencourses', $coursecontext)) {
-            // Originally there was also test of parent category visibility, BUT is was very slow in complex queries
-            // involving "my courses" now it is also possible to simply hide all courses user is not enrolled in :-).
-            return false;
-        }
+    if (!$course->visible && !has_capability('moodle/course:viewhiddencourses', $coursecontext)) {
+        // Originally there was also test of parent category visibility, BUT is was very slow in complex queries
+        // involving "my courses" now it is also possible to simply hide all courses user is not enrolled in :-).
+        return false;
     }
 
     // Is the user enrolled?
     if (\core\session\manager::is_loggedinas()) {
         // Make sure the REAL person can access this course first.
         $realuser = \core\session\manager::get_realuser();
-        if (!is_enrolled($coursecontext, $realuser->id, '', true) and
-            !is_viewing($coursecontext, $realuser->id) and !is_siteadmin($realuser->id)) {
+        if (!is_enrolled($coursecontext, $realuser->id, '', true) &&
+            !is_viewing($coursecontext, $realuser->id) && !is_siteadmin($realuser->id)) {
                 return false;
         }
     }
@@ -530,7 +530,7 @@ function courselinks_has_access($course) {
                 $access = true;
 
             } else if (core_course_category::can_view_course_info($course)) {
-                $params = array('courseid' => $course->id, 'status' => ENROL_INSTANCE_ENABLED);
+                $params = ['courseid' => $course->id, 'status' => ENROL_INSTANCE_ENABLED];
                 $instances = $DB->get_records('enrol', $params, 'sortorder, id ASC');
                 $enrols = enrol_get_plugins(true);
                 // First ask all enabled enrol instances in course if they want to auto enrol user.
@@ -557,7 +557,7 @@ function courselinks_has_access($course) {
                         }
                         // Get a duration for the guest access, a timestamp in the future or false.
                         $until = $enrols[$instance->enrol]->try_guestaccess($instance);
-                        if ($until !== false and $until > time()) {
+                        if ($until !== false && $until > time()) {
                             $USER->enrol['tempguest'][$course->id] = $until;
                             $access = true;
                             break;
@@ -566,15 +566,6 @@ function courselinks_has_access($course) {
                 }
             } else {
                 $access = false;
-                // User is not enrolled and is not allowed to browse courses here.
-                // if ($preventredirect) {
-                // throw new require_login_exception('Course is not available');
-                // }
-                // PAGE->set_context(null);
-                // We need to override the navigation URL as the course won't have been added to the navigation and thus
-                // the navigation will mess up when trying to find it.
-                // navigation_node::override_active_url(new moodle_url('/'));
-                // notice(get_string('coursehidden'), $CFG->wwwroot .'/');
             }
         }
     }

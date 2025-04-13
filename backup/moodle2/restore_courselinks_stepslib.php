@@ -40,9 +40,7 @@ class restore_courselinks_activity_structure_step extends restore_activity_struc
      * @return array of restore_path_element
      */
     protected function define_structure() {
-
-        $paths = array();
-
+        $paths = [];
         $paths[] = new restore_path_element('courselinks', '/activity/courselinks');
 
         return $this->prepare_activity_structure($paths);

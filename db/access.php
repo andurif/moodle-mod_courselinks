@@ -16,34 +16,36 @@
 
 /**
  *
- * @package     mod_courselinks
- * @category    backup
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne
+ * @package  mod_courselinks
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
-$capabilities = array(
-    'mod/courselinks:view'   => array(
-        'captype'       => 'read',
-        'contextlevel'  => CONTEXT_MODULE,
-        'archetypes' => array(
-            'user' => CAP_ALLOW,
-            'guest' => CAP_ALLOW
-        )
-    ),
-
-    'mod/courselinks:addinstance' => array(
-        'riskbitmask'   => RISK_XSS,
-        'captype'       => 'write',
-        'contextlevel'  => CONTEXT_COURSE,
-        'archetypes' => array(
+$capabilities = [
+    'mod/courselinks:view' => [
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => [
+            'guest' => CAP_ALLOW,
+            'student' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ]
+    ],
+
+    'mod/courselinks:addinstance' => [
+        'riskbitmask' => RISK_XSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => [
             'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
             'manager'        => CAP_ALLOW
-        ),
+        ],
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
-    ),
-);
+    ],
+];
 

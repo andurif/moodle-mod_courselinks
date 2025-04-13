@@ -17,16 +17,16 @@
 /**
  * Resource courselinks version information
  *
- * @package    mod_courselinks
- * @copyright  2021 Anthony Durif, Université Clermont Auvergne
+ * @package  mod_courselinks
+ * @copyright  2025 Anthony Durif, Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022082200; // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version   = 2025041200; // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2019051100; // Requires this Moodle version.
 $plugin->component = 'mod_courselinks'; // Full name of the plugin (used for diagnostics).
 $plugin->cron      = 0;
-$plugin->release = 'v3.11-r3';
+$plugin->release = 'v4x.01';
 $plugin->maturity  = MATURITY_STABLE;
